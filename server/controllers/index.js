@@ -1,4 +1,4 @@
-const cliente = require('../model/');
+const contacts = require('../model/');
 
 
 const {
@@ -8,7 +8,7 @@ const {
 
 function getAll(req, res) {
 
-    cliente.select().then(reponse => {
+    contacts.select().then(reponse => {
         return res.status(200).json(message(true,'respuesta exitosa',reponse));
     }).catch(error => {
         return res.status(500).send(message(false, 'no se encontraron registros', error));
@@ -19,17 +19,18 @@ function getAll(req, res) {
 
 async function save(req, res){
 
-    const  id_cliente = await general.max('cliente', 'id_cliente');
+
 
     const data = {
-        id_cliente: id_cliente,
-        nombre: req.body.nombre,
-        identificacion: req.body.identificacion
+        name: req.body.name,
+        email: req.body.email,
+        state: req.body.state,
+        city: req.body.city
     };
 
-    console.log('save cliente',data);
+    console.log('save contacts',data);
 
-    cliente.insert(data).then(reponse => {
+    contacts.insert(data).then(reponse => {
 		if (reponse) {
 			return res.status(201).send(message(true,'respuesta exitosa',reponse));
 		} else {
